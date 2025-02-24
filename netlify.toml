@@ -1,5 +1,5 @@
 [build]
-  command = "pip install --upgrade pip setuptools wheel && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && apt-get update && apt-get install -y build-essential && pip install tokenizers==0.10.3 && pip install -r requirements.txt && python app.py"
+  command = "python -m pip install --upgrade pip setuptools wheel && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && apt-get update && apt-get install -y build-essential && python -m pip install tokenizers==0.10.3 && python -m pip install -r requirements.txt && python app.py"
   publish = "public"
   branch = "main"
 
