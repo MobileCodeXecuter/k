@@ -3,4 +3,4 @@
   publish = "public"
 
 [context.production.environment]
-  HUGGINGFACE_API_KEY = "your_api_key"
+  HUGGINGFACE_API_KEY = "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"
