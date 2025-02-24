@@ -1,4 +1,4 @@
 transformers==4.9.0
 torch==2.6.0
 huggingface-hub==0.0.12
-tokenizers==0.10.3
+tokenizers==0.10.3 --find-links https://download.pytorch.org/whl/torch_stable.html
