@@ -19,22 +19,23 @@ except Exception as e:
 # Step 4: Chatbot loop
 print("Chatbot is ready! Type 'exit' to end the conversation.")
 while True:
-    # Get user input
-      user_input = input("You: ")
-except EOFError:
-    print("EOFError: Please provide input.")
-   
-   # Exit the chatbot if the user types 'exit'
-    if user_input.lower() == "exit":
-        print("Chatbot: Goodbye!")
-        break
+    try:
+        # Get user input
+        user_input = input("You: ")
 
-    # Generate a response
-    if generator is None:
-        print("Chatbot: Model is not loaded. Please check the error logs.")
-    else:
-        try:
-            response = generator(user_input)
-            print(f"Chatbot: {response}")
-        except Exception as e:
-            print(f"Chatbot: Sorry, I encountered an error. Please try again. Error: {e}")
+        # Exit the chatbot if the user types 'exit'
+        if user_input.lower() == "exit":
+            print("Chatbot: Goodbye!")
+            break
+
+        # Generate a response
+        if generator is None:
+            print("Chatbot: Model is not loaded. Please check the error logs.")
+        else:
+            try:
+                response = generator(user_input)
+                print(f"Chatbot: {response}")
+            except Exception as e:
+                print(f"Chatbot: Sorry, I encountered an error. Please try again. Error: {e}")
+    except EOFError:
+        print("EOFError: Please provide input.")
