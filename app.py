@@ -20,9 +20,11 @@ except Exception as e:
 print("Chatbot is ready! Type 'exit' to end the conversation.")
 while True:
     # Get user input
-    user_input = input("You: ")
-
-    # Exit the chatbot if the user types 'exit'
+      user_input = input("You: ")
+except EOFError:
+    print("EOFError: Please provide input.")
+   
+   # Exit the chatbot if the user types 'exit'
     if user_input.lower() == "exit":
         print("Chatbot: Goodbye!")
         break
