@@ -1,17 +1,21 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS
 import transformers
+import logging
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Load your AI model
 try:
-    print("Loading model...")
+    app.logger.info("Loading model...")
     generator = transformers.pipeline("conversational", model="microsoft/DialoGPT-small")
-    print("Model loaded successfully!")
+    app.logger.info("Model loaded successfully!")
 except Exception as e:
-    print("Error loading model:", e)
+    app.logger.error("Error loading model:", e)
     generator = None
 
 @app.route("/")
@@ -20,15 +24,23 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    app.logger.debug("Received request: %s", request.json)
     if generator is None:
+        app.logger.error("Model not loaded.")
         return jsonify({"error": "Model not loaded. Please check the logs."})
 
     user_input = request.json.get("message")
     if not user_input:
+        app.logger.error("No message provided.")
         return jsonify({"error": "Please provide a message."})
 
-    response = generator(user_input)
-    return jsonify({"response": response[0]["generated_text"]})
+    try:
+        response = generator(user_input)
+        app.logger.debug("Generated response: %s", response)
+        return jsonify({"response": response[0]["generated_text"]})
+    except Exception as e:
+        app.logger.error("Error generating response:", e)
+        return jsonify({"error": "Sorry, I encountered an error. Please try again."})
 
 if __name__ == "__main__":
     app.run(debug=True)
