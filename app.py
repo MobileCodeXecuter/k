@@ -22,10 +22,12 @@ except Exception as e:
 
 @app.route("/")
 def home():
+    app.logger.info("Root route accessed")
     return "Chatbot is running! Use the /chat endpoint to interact."
 
 @app.route("/chat", methods=["POST", "OPTIONS"])  # Allow POST and OPTIONS methods
 def chat():
+    app.logger.info("Chat endpoint accessed")
     if request.method == "OPTIONS":
         # Handle preflight request
         response = jsonify({"message": "Preflight request successful"})
