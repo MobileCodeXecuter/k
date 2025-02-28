@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS  # Import CORS
 import transformers
 import logging
 
 app = Flask(__name__)
-CORS(app)
+
+# Enable CORS for all routes
+CORS(app, origins=["https://k-self.vercel.app"])  # Allow requests from your frontend
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
