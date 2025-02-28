@@ -24,8 +24,16 @@ except Exception as e:
 def home():
     return "Chatbot is running! Use the /chat endpoint to interact."
 
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["POST", "OPTIONS"])  # Add OPTIONS method
 def chat():
+    if request.method == "OPTIONS":
+        # Handle preflight request
+        response = jsonify({"message": "Preflight request successful"})
+        response.headers.add("Access-Control-Allow-Origin", "https://k-self.vercel.app")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        response.headers.add("Access-Control-Allow-Methods", "POST")
+        return response
+
     app.logger.debug("Received request: %s", request.json)
     if generator is None:
         app.logger.error("Model not loaded.")
