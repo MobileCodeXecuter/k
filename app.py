@@ -6,7 +6,7 @@ import logging
 app = Flask(__name__)
 
 # Enable CORS for all routes
-CORS(app, origins=["https://k-self.vercel.app"])  # Allow requests from your frontend
+CORS(app, origins=["https://k-t7mp.vercel.app/"])  # Allow requests from your frontend
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
