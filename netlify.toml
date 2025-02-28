@@ -1,5 +1,5 @@
 [build]
-  command = "python -m pip install --upgrade pip setuptools wheel && python -m pip install -r requirements.txt"
+  command = "python -m pip install --upgrade pip setuptools wheel && python -m pip install -r requirements.txt && mkdir -p public && echo 'Hello, world!' > public/index.html && python app.py"
   publish = "public"
 
 [context.production.environment]
