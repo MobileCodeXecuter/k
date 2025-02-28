@@ -63,7 +63,8 @@
             }
 
             try {
-                const response = await fetch("/chat", {
+                // Use your Vercel app URL
+                const response = await fetch("https://k-t7mp.vercel.app/chat", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -71,6 +72,7 @@
                     body: JSON.stringify({ message: userInput }),
                 });
 
+                console.log("Response status:", response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
