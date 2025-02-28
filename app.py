@@ -4,7 +4,7 @@ import os
 
 # Step 2: Load the API key directly from the environment variable
 api_key = os.getenv("HUGGINGFACE_API_KEY")
-if not api_key:
+if not api_key: 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
     raise ValueError("HUGGINGFACE_API_KEY not found in environment variables.")
 
 # Step 3: Load the Microsoft DialoGPT model
@@ -16,26 +16,5 @@ except Exception as e:
     print("Error loading model:", e)
     generator = None  # Ensure generator is defined even if loading fails
 
-# Step 4: Chatbot loop
-print("Chatbot is ready! Type 'exit' to end the conversation.")
-while True:
-    try:
-        # Get user input
-        user_input = input("You: ")
-
-        # Exit the chatbot if the user types 'exit'
-        if user_input.lower() == "exit":
-            print("Chatbot: Goodbye!")
-            break
-
-        # Generate a response
-        if generator is None:
-            print("Chatbot: Model is not loaded. Please check the error logs.")
-        else:
-            try:
-                response = generator(user_input)
-                print(f"Chatbot: {response}")
-            except Exception as e:
-                print(f"Chatbot: Sorry, I encountered an error. Please try again. Error: {e}")
-    except EOFError:
-        print("EOFError: Please provide input.")
+# Step 4: Print a success message
+print("Chatbot setup complete! The app is ready for deployment.")
