@@ -6,7 +6,7 @@ import logging
 app = Flask(__name__)
 
 # Enable CORS for all routes
-CORS(app)  # Allow requests from all origins (update this for production)
+CORS(app, origins=["https://k-t7mp.vercel.app"])  # Allow requests from your frontend
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -26,7 +26,7 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    app.logger.debug("Received request: %s", request.json)
+    app.logger.debug("Received request at /chat endpoint")
     if generator is None:
         app.logger.error("Model not loaded.")
         return jsonify({"error": "Model not loaded. Please check the logs."}), 500
