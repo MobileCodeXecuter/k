@@ -14,17 +14,24 @@
     <script>
         async function sendMessage() {
             const userInput = document.getElementById("user-input").value;
+            if (!userInput) {
+                alert("Please enter a message.");
+                return;
+            }
+
             try {
-                const response = await fetch("https://k-self.vercel.app/", {
+                const response = await fetch("https://your-vercel-app.vercel.app/chat", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ message: userInput }),
                 });
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+
                 const data = await response.json();
                 document.getElementById("chat-output").innerText = data.response;
             } catch (error) {
