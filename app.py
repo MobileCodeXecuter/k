@@ -1,40 +1,34 @@
-# Step 1: Import necessary libraries
-from transformers import pipeline
-import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
+import transformers
 
-# Step 2: Load the API key directly from the environment variable
-api_key = os.getenv("HUGGINGFACE_API_KEY")
-if not api_key:
-    raise ValueError("HUGGINGFACE_API_KEY not found in environment variables.")
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
-# Step 3: Load the Microsoft DialoGPT model
+# Load your AI model
 try:
     print("Loading model...")
-    generator = pipeline("conversational", model="microsoft/DialoGPT-small", use_auth_token=api_key)
+    generator = transformers.pipeline("conversational", model="microsoft/DialoGPT-small")
     print("Model loaded successfully!")
 except Exception as e:
     print("Error loading model:", e)
-    generator = None  # Ensure generator is defined even if loading fails
+    generator = None
 
-# Step 4: Chatbot loop
-if generator is not None:
-    print("Chatbot is ready! Type 'exit' to end the conversation.")
-    while True:
-        try:
-            # Get user input
-            user_input = input("You: ")
+@app.route("/")
+def home():
+    return "Chatbot is running! Use the /chat endpoint to interact."
 
-            # Exit the chatbot if the user types 'exit'
-            if user_input.lower() == "exit":
-                print("Chatbot: Goodbye!")
-                break
+@app.route("/chat", methods=["POST"])
+def chat():
+    if generator is None:
+        return jsonify({"error": "Model not loaded. Please check the logs."})
 
-            # Generate a response
-            response = generator(user_input)
-            print(f"Chatbot: {response}")
-        except EOFError:
-            print("Chatbot: Please provide input.")
-        except Exception as e:
-            print(f"Chatbot: Sorry, I encountered an error. Please try again. Error: {e}")
-else:
-    print("Chatbot: Model is not loaded. Please check the error logs.")
+    user_input = request.json.get("message")
+    if not user_input:
+        return jsonify({"error": "Please provide a message."})
+
+    response = generator(user_input)
+    return jsonify({"response": response[0]["generated_text"]})
+
+if __name__ == "__main__":
+    app.run(debug=True)
