@@ -6,7 +6,7 @@ import logging
 app = Flask(__name__)
 
 # Enable CORS for all routes
-CORS(app, origins=["https://k-t7mp.vercel.app/"])  # Allow requests from your frontend
+CORS(app, origins=["https://k-t7mp.vercel.app"])  # Allow requests from your frontend
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -22,16 +22,14 @@ except Exception as e:
 
 @app.route("/")
 def home():
-    app.logger.info("Root route accessed")
     return "Chatbot is running! Use the /chat endpoint to interact."
 
 @app.route("/chat", methods=["POST", "OPTIONS"])  # Allow POST and OPTIONS methods
 def chat():
-    app.logger.info("Chat endpoint accessed")
     if request.method == "OPTIONS":
         # Handle preflight request
         response = jsonify({"message": "Preflight request successful"})
-        response.headers.add("Access-Control-Allow-Origin", "https://k-self.vercel.app")
+        response.headers.add("Access-Control-Allow-Origin", "https://k-t7mp.vercel.app")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type")
         response.headers.add("Access-Control-Allow-Methods", "POST")
         return response
