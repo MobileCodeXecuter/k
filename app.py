@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS
 import transformers
 import logging
 
@@ -24,7 +24,7 @@ except Exception as e:
 def home():
     return "Chatbot is running! Use the /chat endpoint to interact."
 
-@app.route("/chat", methods=["POST", "OPTIONS"])  # Add OPTIONS method
+@app.route("/chat", methods=["POST", "OPTIONS"])  # Allow POST and OPTIONS methods
 def chat():
     if request.method == "OPTIONS":
         # Handle preflight request
