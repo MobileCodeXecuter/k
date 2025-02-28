@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS  # Import CORS
 import transformers
 import logging
 
@@ -49,8 +49,4 @@ def chat():
         app.logger.debug("Generated response: %s", response)
         return jsonify({"response": response[0]["generated_text"]})
     except Exception as e:
-        app.logger.error("Error generating response:", e)
-        return jsonify({"error": "Sorry, I encountered an error. Please try again."})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+        app.log
